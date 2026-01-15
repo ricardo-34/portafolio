@@ -13,6 +13,10 @@ function App() {
     message: ''
   })
 
+  // Número de WhatsApp (actualiza con tu número real)
+  const whatsappNumber = '573157279812' // Formato: código país + número sin espacios
+  const whatsappMessage = encodeURIComponent('Hola Ricardo, vi tu portafolio y me gustaría conversar sobre un proyecto.')
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
@@ -27,6 +31,11 @@ function App() {
       element.scrollIntoView({ behavior: 'smooth' })
       setActiveSection(sectionId)
     }
+  }
+
+  const openWhatsApp = (customMessage = null) => {
+    const message = customMessage ? encodeURIComponent(customMessage) : whatsappMessage
+    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank')
   }
 
   const showNotification = (message, type = 'success') => {
@@ -46,12 +55,10 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    // Configuración de EmailJS
     const serviceId = 'service_unhxct9'
     const templateId = 'template_lf1rib8'
     const publicKey = 'IvEIUT_u55qzfpMfL'
     
-    // Datos del formulario
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
@@ -59,7 +66,6 @@ function App() {
       to_name: 'Ricardo Melo'
     }
     
-    // Enviar email
     emailjs.send(serviceId, templateId, templateParams, publicKey)
       .then((response) => {
         console.log('Email enviado exitosamente!', response.status, response.text)
@@ -115,6 +121,19 @@ function App() {
         </div>
       )}
 
+      {/* WhatsApp Floating Button */}
+      <button 
+        className="whatsapp-float" 
+        onClick={() => openWhatsApp()}
+        aria-label="Contactar por WhatsApp"
+      >
+        <svg viewBox="0 0 32 32" fill="currentColor">
+          <path d="M16 0C7.163 0 0 7.163 0 16c0 2.825.736 5.48 2.022 7.784L0 32l8.448-2.016A15.937 15.937 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333c-2.605 0-5.056-.748-7.13-2.035l-.511-.304-5.298 1.264 1.296-4.905-.334-.53A13.26 13.26 0 012.667 16c0-7.364 5.97-13.333 13.333-13.333S29.333 8.636 29.333 16 23.364 29.333 16 29.333z"/>
+          <path d="M23.547 19.574c-.405-.202-2.394-1.181-2.765-1.316-.371-.135-.64-.202-.91.202-.27.405-1.045 1.316-1.281 1.586-.236.27-.472.304-.877.101-.405-.202-1.712-.631-3.26-2.011-1.206-1.075-2.02-2.401-2.256-2.806-.236-.405-.025-.624.177-.826.182-.182.405-.472.607-.708.202-.236.27-.405.405-.675.135-.27.067-.506-.034-.708-.101-.202-.91-2.192-1.247-3.001-.329-.788-.662-.681-.91-.694-.236-.012-.506-.015-.776-.015s-.708.101-1.079.506c-.371.405-1.416 1.384-1.416 3.374s1.449 3.913 1.651 4.183c.202.27 2.847 4.347 6.898 6.094.963.416 1.716.664 2.302.85.968.307 1.849.264 2.546.16.777-.116 2.394-.979 2.731-1.924.337-.945.337-1.755.236-1.924-.101-.169-.371-.27-.776-.472z"/>
+        </svg>
+        <span className="whatsapp-text">WhatsApp</span>
+      </button>
+
       {/* Navigation */}
       <nav className={`nav ${isScrolled ? 'nav-scrolled' : ''}`}>
         <div className="nav-container">
@@ -134,6 +153,9 @@ function App() {
             </button>
             <button onClick={() => scrollToSection('contact')} className={activeSection === 'contact' ? 'active' : ''}>
               Contacto
+            </button>
+            <button onClick={() => openWhatsApp()} className="btn-nav-contact">
+              💬 Contactar
             </button>
           </div>
         </div>
@@ -206,6 +228,61 @@ function App() {
         </div>
       </section>
 
+      {/* Value Proposition Section - NUEVO */}
+      <section className="value-proposition">
+        <div className="section-container">
+          <div className="value-content">
+            <div className="value-badge">
+              <span className="badge-icon">🚀</span>
+              <span className="badge-text">Lo que ofrezco</span>
+            </div>
+            <h2 className="value-title">
+              Desarrollo páginas web profesionales para negocios
+            </h2>
+            <p className="value-description">
+              Soluciones completas que incluyen <strong>dominio personalizado</strong>, 
+              <strong> hosting en VPS</strong> optimizado y <strong>WhatsApp integrado</strong> 
+              para que tus clientes te contacten fácilmente. Todo listo para que tu negocio 
+              tenga presencia digital profesional desde el día uno.
+            </p>
+            <div className="value-features">
+              <div className="feature-item">
+                <div className="feature-icon">🌐</div>
+                <div className="feature-content">
+                  <h3>Sitios Web Completos</h3>
+                  <p>Desde landing pages hasta plataformas empresariales</p>
+                </div>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">⚡</div>
+                <div className="feature-content">
+                  <h3>Rápido y Optimizado</h3>
+                  <p>Carga veloz en móvil y desktop para mejor experiencia</p>
+                </div>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">💬</div>
+                <div className="feature-content">
+                  <h3>WhatsApp Integrado</h3>
+                  <p>Tus clientes te contactan con un solo clic</p>
+                </div>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">🔧</div>
+                <div className="feature-content">
+                  <h3>Soporte Continuo</h3>
+                  <p>Mantenimiento y actualizaciones incluidas</p>
+                </div>
+              </div>
+            </div>
+            <button onClick={() => openWhatsApp('Hola Ricardo, quiero saber más sobre tus servicios de desarrollo web.')} className="btn-value-cta">
+              📞 Hablemos de tu proyecto
+              <span className="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section id="about" className="about">
         <div className="section-container">
@@ -217,11 +294,8 @@ function App() {
                 <p>
                   Soy estudiante de noveno semestre de Ingeniería de Sistemas con una pasión 
                   por crear soluciones tecnológicas que generen un impacto real. Mi enfoque se 
-                  centra en el desarrollo full stack, donde combino creatividad con código para 
-                  construir experiencias digitales excepcionales.
-                </p>
-                <p>
-                  Con experiencia en el desarrollo de plataformas web y aplicaciones móviles, 
+                  centra en desarrollar productos digitales que no solo funcionen bien, sino que 
+                  también ofrezcan experiencias excepcionales. A lo largo de mi carrera, 
                   he trabajado en proyectos que van desde sistemas de rastreo vehicular hasta 
                   soluciones empresariales complejas. Mi objetivo es establecer <strong>RAMD</strong>, 
                   mi propia empresa de desarrollo, donde pueda llevar ideas innovadoras al 
@@ -303,9 +377,7 @@ function App() {
           
           <div className="project-featured">
             <div className="project-image">
-              
               <img src={logo} alt="Cooespatrans" />
-             
             </div>
             <div className="project-content">
               <div className="project-tag">Proyecto destacado</div>
@@ -329,20 +401,27 @@ function App() {
                 <span className="tech-tag">Flutter</span>
                 <span className="tech-tag">Vite</span>
               </div>
-              <a 
-                href="https://cooespatrans.com/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="project-link"
-              >
-                Ver proyecto en vivo
-                <span className="arrow">→</span>
-              </a>
+              <div className="project-actions">
+                <a 
+                  href="https://cooespatrans.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="project-link"
+                >
+                  Ver proyecto en vivo
+                  <span className="arrow">→</span>
+                </a>
+                
+              </div>
             </div>
           </div>
 
           <div className="more-projects">
-            <p className="more-text">Más proyectos próximamente...</p>
+            <p className="more-text">¿Tienes un proyecto en mente?</p>
+            <button onClick={() => openWhatsApp()} className="btn-more-projects">
+              Conversemos sobre tu idea
+              <span className="arrow">→</span>
+            </button>
           </div>
         </div>
       </section>
@@ -374,6 +453,15 @@ function App() {
                   >
                     github.com/ricardo-34
                   </a>
+                </div>
+                <div className="contact-item">
+                  <div className="contact-icon">💬</div>
+                  <button 
+                    onClick={() => openWhatsApp()}
+                    className="contact-value contact-link contact-whatsapp-btn"
+                  >
+                    WhatsApp directo
+                  </button>
                 </div>
               </div>
             </div>
