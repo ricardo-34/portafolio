@@ -922,6 +922,98 @@ section {
   font-weight: 700;
 }
 
+/* Notification Toast - NUEVO */
+.notification {
+  position: fixed;
+  top: 100px;
+  right: var(--spacing-md);
+  z-index: 10000;
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-accent);
+  padding: var(--spacing-md);
+  min-width: 350px;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  animation: slideInRight 0.3s ease-out;
+}
+
+.notification-success {
+  border-color: var(--color-accent);
+}
+
+.notification-error {
+  border-color: #dc2626;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex: 1;
+}
+
+.notification-icon {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.notification-error .notification-icon {
+  background-color: #dc2626;
+}
+
+.notification-message {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.notification-close:hover {
+  color: var(--color-accent);
+  transform: scale(1.2);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from {
@@ -1010,6 +1102,14 @@ section {
     --spacing-md: 1.5rem;
     --spacing-lg: 3rem;
     --spacing-xl: 4rem;
+  }
+
+  .notification {
+    top: 80px;
+    right: var(--spacing-sm);
+    left: var(--spacing-sm);
+    min-width: auto;
+    max-width: none;
   }
 
   .nav-links button {

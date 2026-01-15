@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
+import emailjs from '@emailjs/browser'
 import './App.css'
 import logo from './assets/Cooespatrans-IMG.png'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [isScrolled, setIsScrolled] = useState(false)
+  const [notification, setNotification] = useState({ show: false, message: '', type: '' })
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,6 +29,13 @@ function App() {
     }
   }
 
+  const showNotification = (message, type = 'success') => {
+    setNotification({ show: true, message, type })
+    setTimeout(() => {
+      setNotification({ show: false, message: '', type: '' })
+    }, 5000)
+  }
+
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -36,10 +45,31 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    // Aquí puedes agregar la lógica para enviar el formulario
-    alert('¡Mensaje enviado! Pronto me pondré en contacto contigo.')
-    setFormData({ name: '', email: '', message: '' })
+    
+    // Configuración de EmailJS
+    const serviceId = 'service_unhxct9'
+    const templateId = 'template_lf1rib8'
+    const publicKey = 'IvEIUT_u55qzfpMfL'
+    
+    // Datos del formulario
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+      to_name: 'Ricardo Melo'
+    }
+    
+    // Enviar email
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then((response) => {
+        console.log('Email enviado exitosamente!', response.status, response.text)
+        showNotification('¡Mensaje enviado exitosamente! Pronto me pondré en contacto contigo.', 'success')
+        setFormData({ name: '', email: '', message: '' })
+      })
+      .catch((error) => {
+        console.error('Error al enviar el email:', error)
+        showNotification('Hubo un error al enviar el mensaje. Por favor intenta de nuevo.', 'error')
+      })
   }
 
   const technologies = [
@@ -67,6 +97,24 @@ function App() {
 
   return (
     <div className="app">
+      {/* Notification Toast */}
+      {notification.show && (
+        <div className={`notification notification-${notification.type}`}>
+          <div className="notification-content">
+            <span className="notification-icon">
+              {notification.type === 'success' ? '✓' : '✕'}
+            </span>
+            <span className="notification-message">{notification.message}</span>
+          </div>
+          <button 
+            className="notification-close" 
+            onClick={() => setNotification({ show: false, message: '', type: '' })}
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className={`nav ${isScrolled ? 'nav-scrolled' : ''}`}>
         <div className="nav-container">
