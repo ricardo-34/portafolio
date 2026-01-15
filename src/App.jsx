@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import logo from './assets/Cooespatrans-IMG.png'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -255,7 +256,7 @@ function App() {
           <div className="project-featured">
             <div className="project-image">
               
-              <img src="/src/assets/Cooespatrans-IMG.png" alt="Cooespatrans Platform" />
+              <img src={logo} alt="Cooespatrans" />
              
             </div>
             <div className="project-content">
